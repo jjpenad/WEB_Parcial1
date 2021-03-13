@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+li {
+	display: inline;
+}
+
+div {
+	text-align: center;
+}
+
+h2 {
+	font-size: 1.2rem;
+}
+
+hr {
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.img-fluid {
+	width: 100%;
+}
+
+.container {
+	margin: 0 0 0 0;
+}
+
+#logotype {
+	font-family: 'Satisfy', cursive;
+	font-size: 2rem;
+	margin: 0 0 0 0;
+}
+
+#shopCarImg {
+	width: 3rem;
+	height: auto;
+}
+
+#amountCarItems {
+	margin: 0.8em 0 0 0;
+}
+
+#categoriesNav {
+	background-color: #333a40;
+	color: white;
+}
+
+#categoriesNav a {
+	color: white;
+}
