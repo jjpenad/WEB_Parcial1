@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
+
 li {
 	display: inline;
 }
@@ -25,6 +26,18 @@ hr {
 	margin: 0 0 0 0;
 }
 
+.card-footer{
+	border-top: 0;
+	background-color: white;
+}
+
+.confirmOrder{
+	background-color: #F1EBA9;
+	border-width: 1px;
+	border-color: black;
+}
+
+
 #logotype {
 	font-family: 'Satisfy', cursive;
 	font-size: 2rem;
@@ -47,4 +60,8 @@ hr {
 
 #categoriesNav a {
 	color: white;
+}
+
+#carContainer{
+	cursor: pointer;
 }
