@@ -52,6 +52,7 @@ function changeProcuctsByCategory(c) {
 function putAndGetInColumn(str) {
 	return `<div class="col">${str}</div>`;
 }
+
 function putAndGetInRow(str) {
 	return `<div class="row row-cols-1 row-cols-md-4 g-4">${str}</div>`;
 }
