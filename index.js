@@ -9,9 +9,10 @@ const categoryTitle = document.getElementById('categoryTitle');
 const categNav = document.getElementById('categoriesNav');
 const mainContainer = document.getElementById('categoryItems');
 const rowForItems = document.getElementById('categoryItems').getElementsByClassName('row')[0];
+const modalYesBtn = document.getElementById('modalYesBtn');
+const modalNoBtn = document.getElementById('modalNoBtn');
 const car = [];
 
-carContainer.addEventListener('click', showCarOnScreen);
 
 function setCategories() {
 	let listItems = categNav.getElementsByTagName('ul')[0].getElementsByTagName('li');
@@ -26,7 +27,6 @@ function setCategories() {
 function changeProcuctsByCategory(c) {
 	let category = c.path[0].innerHTML;
 
-	console.log(category);
 	categoryTitle.innerHTML = category;
 
 	fetch(urls['productos'])
@@ -80,10 +80,10 @@ function getCarTable()
 		amount = Number(it.price)*Number(it.quantity);
 		let tItem=`	<tr>
 						<th scope="row">${i+1}</th>
-						<td>${it.quantity}</td>
-						<td>${it.name}</td>
-						<td>${it.price}</td>
-						<td>${amount}</td>
+						<td class="tItemQ">${it.quantity}</td>
+						<td class="tItemName">${it.name}</td>
+						<td class="tItemPrice">${it.price}</td>
+						<td class="tItemAmount">${amount.toFixed(2)}</td>
 						<td>
 							<button type="button" class="btn btn-dark more">+</button>
 							<button type="button" class="btn btn-dark less">-</button>
@@ -122,7 +122,7 @@ function createItemCard(src, title, content, price) {
 					</div>
 					<div class="card-footer text-start">
 						<p ><strong>&#36;<span class="itemPrice">${price}</span></strong></p>
-						<a href="#" class="btn btn-dark float-left addToCar">Add to car</a>
+						<a class="btn btn-dark float-left addToCar">Add to car</a>
       				</div>
 				</div>`;
 
@@ -154,7 +154,6 @@ function addToCar(event)
 
 	addToCarByItem({name:title, content:content, price:price});
 	showCarSize();
-	console.log(car);
 }
 
 
@@ -166,7 +165,6 @@ function addToCarByItem(item)
 	for(i=0; i<car.length;i++)
 	{
 		let it = car[i];
-		console.log(it);
 		if(it.name===item.name)
 		{
 			found=it;
@@ -183,6 +181,35 @@ function addToCarByItem(item)
 		car.push(newElem);
 	}
 }
+
+function removeFromCarByItem(item)
+{
+	let found=false;
+	let i;
+
+	for(i=0; i<car.length;i++)
+	{
+		let it = car[i];
+		if(it.name===item.name)
+		{
+			found=it;
+			break;
+		}
+	}
+	
+	if(found)
+	{
+		if(found.quantity>0)
+		{
+			found.quantity--;
+			if(found.quantity===0)
+			{
+				car.splice(i,1);
+			}
+		}
+	}
+}
+
 
 function showCarSize()
 {
@@ -204,14 +231,76 @@ function showCarOnScreen()
 			</strong>
 		</div>
 		<div>
-			<button type="button" class="btn btn-danger cancelOrder">Cancel</button>
+			<button type="button" class="btn btn-danger cancelOrder" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel</button>
 			<button type="button" class="btn btn-light confirmOrder">Confirm Order</button>
 		</div>
 	
 	`;
 
-
+	categoryTitle.innerHTML = `Order Detail`;
 	mainContainer.innerHTML=putAndGetInTableContainer("tc1", totalAndTable[1], footer);
+
+	setEventCarTable();
+}
+
+function setEventCarTable()
+{
+	let tContainer = document.getElementById('tc1');
+	if(tContainer)
+	{
+		let table = tContainer.getElementsByClassName('tcTable')[0].getElementsByClassName('table')[0];
+		let tableBody = table.getElementsByTagName('tbody')[0];
+		let tRows = tableBody.getElementsByTagName('tr');
+		let i;
+		for(i=0;i<tRows.length;i++)
+		{
+			let btnMore = tRows[i].getElementsByClassName('more')[0];
+			let btnLess = tRows[i].getElementsByClassName('less')[0];
+
+			btnMore.addEventListener("click", modifyItemAdd);
+			btnLess.addEventListener("click", modifyItemRemove);
+		}
+
+		let footer = tContainer.getElementsByClassName('tcFooter')[0];
+	//  let btnCancel = footer.getElementsByClassName('cancelOrder')[0];
+		let btnConfirm = footer.getElementsByClassName('confirmOrder')[0];
+
+	//	btnCancel.addEventListener('click',cancelOrder);
+		btnConfirm.addEventListener('click',confirmOrder);
+	}
+}
+
+function modifyItemAdd(event)
+{
+	let tr = event.path[2];
+	let name = tr.getElementsByClassName('tItemName')[0].innerHTML;
+	
+	addToCarByItem({name:name});
+	showCarOnScreen();
+	showCarSize();
+}
+
+function modifyItemRemove(event)
+{
+	let tr = event.path[2];
+	let name = tr.getElementsByClassName('tItemName')[0].innerHTML;
+	
+	removeFromCarByItem({name:name});
+	showCarOnScreen();
+	showCarSize();
+	
+}
+
+function cancelOrder()
+{
+	car.splice(0,car.length);
+	showCarOnScreen();
+	showCarSize();
+}
+
+function confirmOrder()
+{
+	console.log(car);
 }
 
 function setInitialSetUp()
@@ -241,5 +330,8 @@ function setInitialSetUp()
 }
 //--------------------------------------------------------------------------------------
 
+
+carContainer.addEventListener('click', showCarOnScreen);
+modalYesBtn.addEventListener('click', cancelOrder);
 setCategories();
 setInitialSetUp();
