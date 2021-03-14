@@ -103,7 +103,7 @@ function getCarTable() {
 				</thead>`;
 	let body = `<tbody>${string}</tbody>`;
 
-	let table = `<table class="table">${head}${body}</table>`;
+	let table = `<table class="table table-striped">${head}${body}</table>`;
 
 	return [ total.toFixed(2), table ];
 }
