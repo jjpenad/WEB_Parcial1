@@ -13,7 +13,6 @@ const modalYesBtn = document.getElementById('modalYesBtn');
 const modalNoBtn = document.getElementById('modalNoBtn');
 const car = [];
 
-
 function setCategories() {
 	let listItems = categNav.getElementsByTagName('ul')[0].getElementsByTagName('li');
 	let i;
@@ -37,13 +36,13 @@ function changeProcuctsByCategory(c) {
 			json.forEach((element) => {
 				if (element['name'] === category) {
 					let prod = element['products'];
-					let string ='';
+					let string = '';
 					prod.forEach((elem) => {
 						string += putAndGetInColumn(
 							createItemCard(elem['image'], elem['name'], elem['description'], elem['price'])
 						);
 					});
-					mainContainer.innerHTML=putAndGetInRow(string);
+					mainContainer.innerHTML = putAndGetInRow(string);
 				}
 			});
 			setAddToCarEvents();
@@ -57,8 +56,7 @@ function putAndGetInRow(str) {
 	return `<div class="row row-cols-1 row-cols-md-4 g-4">${str}</div>`;
 }
 
-function putAndGetInTableContainer(id, table, footer)
-{
+function putAndGetInTableContainer(id, table, footer) {
 	return `<div id="${id}" class="container-fluid tableContainer">
 				<div class="container-fluid tcTable">
 					${table}
@@ -69,17 +67,15 @@ function putAndGetInTableContainer(id, table, footer)
 			</div>`;
 }
 
-function getCarTable()
-{
+function getCarTable() {
 	let string = '';
 	let total = 0;
 	let i;
-	for(i=0; i<car.length;i++)
-	{
-		let it=car[i];
-		amount = Number(it.price)*Number(it.quantity);
-		let tItem=`	<tr>
-						<th scope="row">${i+1}</th>
+	for (i = 0; i < car.length; i++) {
+		let it = car[i];
+		amount = Number(it.price) * Number(it.quantity);
+		let tItem = `	<tr>
+						<th scope="row">${i + 1}</th>
 						<td class="tItemQ">${it.quantity}</td>
 						<td class="tItemName">${it.name}</td>
 						<td class="tItemPrice">${it.price}</td>
@@ -89,9 +85,9 @@ function getCarTable()
 							<button type="button" class="btn btn-dark less">-</button>
 						</td>
 					</tr>`;
-		
-		total+=amount;
-		string+=tItem;
+
+		total += amount;
+		string += tItem;
 	}
 
 	let head = `<thead>
@@ -106,12 +102,10 @@ function getCarTable()
 				</thead>`;
 	let body = `<tbody>${string}</tbody>`;
 
-
 	let table = `<table class="table">${head}${body}</table>`;
 
-	return [total.toFixed(2),table];
+	return [ total.toFixed(2), table ];
 }
-
 
 function createItemCard(src, title, content, price) {
 	let card = `<div class="card h-100">
@@ -129,102 +123,83 @@ function createItemCard(src, title, content, price) {
 	return card;
 }
 
-function setAddToCarEvents()
-{
+function setAddToCarEvents() {
 	let row = mainContainer.getElementsByClassName('row');
-	if(row)
-	{
+	if (row) {
 		let r = row[0];
 		let collection = r.getElementsByClassName('addToCar');
-		let i=0;
-		for(i=0;i<collection.length;i++)
-		{
+		let i = 0;
+		for (i = 0; i < collection.length; i++) {
 			collection[i].addEventListener('click', addToCar);
 		}
 	}
-	
 }
 
-function addToCar(event)
-{
+function addToCar(event) {
 	let card = event.path[2];
 	let title = card.getElementsByClassName('card-title')[0].innerHTML;
 	let content = card.getElementsByClassName('card-text')[0].innerHTML;
 	let price = card.getElementsByClassName('itemPrice')[0].innerHTML;
 
-	addToCarByItem({name:title, content:content, price:price});
+	addToCarByItem({ name: title, content: content, price: price });
 	showCarSize();
 }
 
-
-function addToCarByItem(item)
-{
-	let found=false;
+function addToCarByItem(item) {
+	let found = false;
 	let i;
 
-	for(i=0; i<car.length;i++)
-	{
+	for (i = 0; i < car.length; i++) {
 		let it = car[i];
-		if(it.name===item.name)
-		{
-			found=it;
+		if (it.name === item.name) {
+			found = it;
 			break;
 		}
 	}
-	
-	if(found)
-	{
+
+	if (found) {
 		found.quantity++;
 	}
-	else{
-		let newElem = {quantity:1, name:item.name, content: item.content, price:item.price};
+	else {
+		let newElem = { quantity: 1, name: item.name, content: item.content, price: item.price };
 		car.push(newElem);
 	}
 }
 
-function removeFromCarByItem(item)
-{
-	let found=false;
+function removeFromCarByItem(item) {
+	let found = false;
 	let i;
 
-	for(i=0; i<car.length;i++)
-	{
+	for (i = 0; i < car.length; i++) {
 		let it = car[i];
-		if(it.name===item.name)
-		{
-			found=it;
+		if (it.name === item.name) {
+			found = it;
 			break;
 		}
 	}
-	
-	if(found)
-	{
-		if(found.quantity>0)
-		{
+
+	if (found) {
+		if (found.quantity > 0) {
 			found.quantity--;
-			if(found.quantity===0)
-			{
-				car.splice(i,1);
+			if (found.quantity === 0) {
+				car.splice(i, 1);
 			}
 		}
 	}
 }
 
-
-function showCarSize()
-{
-	let q=0;
-	car.forEach((element)=>{
-		q+=element.quantity
+function showCarSize() {
+	let q = 0;
+	car.forEach((element) => {
+		q += element.quantity;
 	});
-	amountCarItems.innerHTML=`${q} items`
+	amountCarItems.innerHTML = `${q} items`;
 }
 
-function showCarOnScreen()
-{
+function showCarOnScreen() {
 	let totalAndTable = getCarTable();
 
-	let footer=`
+	let footer = `
 		<div>
 			<strong>
 				Total: ${totalAndTable[0]}
@@ -238,74 +213,65 @@ function showCarOnScreen()
 	`;
 
 	categoryTitle.innerHTML = `Order Detail`;
-	mainContainer.innerHTML=putAndGetInTableContainer("tc1", totalAndTable[1], footer);
+	mainContainer.innerHTML = putAndGetInTableContainer('tc1', totalAndTable[1], footer);
 
 	setEventCarTable();
 }
 
-function setEventCarTable()
-{
+function setEventCarTable() {
 	let tContainer = document.getElementById('tc1');
-	if(tContainer)
-	{
+	if (tContainer) {
 		let table = tContainer.getElementsByClassName('tcTable')[0].getElementsByClassName('table')[0];
 		let tableBody = table.getElementsByTagName('tbody')[0];
 		let tRows = tableBody.getElementsByTagName('tr');
 		let i;
-		for(i=0;i<tRows.length;i++)
-		{
+		for (i = 0; i < tRows.length; i++) {
 			let btnMore = tRows[i].getElementsByClassName('more')[0];
 			let btnLess = tRows[i].getElementsByClassName('less')[0];
 
-			btnMore.addEventListener("click", modifyItemAdd);
-			btnLess.addEventListener("click", modifyItemRemove);
+			btnMore.addEventListener('click', modifyItemAdd);
+			btnLess.addEventListener('click', modifyItemRemove);
 		}
 
 		let footer = tContainer.getElementsByClassName('tcFooter')[0];
-	//  let btnCancel = footer.getElementsByClassName('cancelOrder')[0];
+		//  let btnCancel = footer.getElementsByClassName('cancelOrder')[0];
 		let btnConfirm = footer.getElementsByClassName('confirmOrder')[0];
 
-	//	btnCancel.addEventListener('click',cancelOrder);
-		btnConfirm.addEventListener('click',confirmOrder);
+		//	btnCancel.addEventListener('click',cancelOrder);
+		btnConfirm.addEventListener('click', confirmOrder);
 	}
 }
 
-function modifyItemAdd(event)
-{
+function modifyItemAdd(event) {
 	let tr = event.path[2];
 	let name = tr.getElementsByClassName('tItemName')[0].innerHTML;
-	
-	addToCarByItem({name:name});
+
+	addToCarByItem({ name: name });
 	showCarOnScreen();
 	showCarSize();
 }
 
-function modifyItemRemove(event)
-{
+function modifyItemRemove(event) {
 	let tr = event.path[2];
 	let name = tr.getElementsByClassName('tItemName')[0].innerHTML;
-	
-	removeFromCarByItem({name:name});
-	showCarOnScreen();
-	showCarSize();
-	
-}
 
-function cancelOrder()
-{
-	car.splice(0,car.length);
+	removeFromCarByItem({ name: name });
 	showCarOnScreen();
 	showCarSize();
 }
 
-function confirmOrder()
-{
+function cancelOrder() {
+	car.splice(0, car.length);
+	showCarOnScreen();
+	showCarSize();
+}
+
+function confirmOrder() {
 	console.log(car);
 }
 
-function setInitialSetUp()
-{
-	categoryTitle.innerHTML = "Burguers";
+function setInitialSetUp() {
+	categoryTitle.innerHTML = 'Burguers';
 
 	fetch(urls['productos'])
 		.then((response) => {
@@ -313,15 +279,15 @@ function setInitialSetUp()
 		})
 		.then((json) => {
 			json.forEach((element) => {
-				if (element['name'] === "Burguers") {
+				if (element['name'] === 'Burguers') {
 					let prod = element['products'];
-					let string ='';
+					let string = '';
 					prod.forEach((elem) => {
 						string += putAndGetInColumn(
 							createItemCard(elem['image'], elem['name'], elem['description'], elem['price'])
 						);
 					});
-					mainContainer.innerHTML=putAndGetInRow(string);
+					mainContainer.innerHTML = putAndGetInRow(string);
 				}
 			});
 
@@ -329,7 +295,6 @@ function setInitialSetUp()
 		});
 }
 //--------------------------------------------------------------------------------------
-
 
 carContainer.addEventListener('click', showCarOnScreen);
 modalYesBtn.addEventListener('click', cancelOrder);

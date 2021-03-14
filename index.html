@@ -69,39 +69,42 @@
 
         <div id="categoryItems" class="container-fluid">
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                
+
             </div>
         </div>
 
         <!--Cancel Modal-->
         <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="cancelModalLabel">Cancel the order</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cancelModalLabel">Cancel the order</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        Are you sure about cancelling the order?
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modalYesBtn" type="button" class="btn btn-light" data-bs-dismiss="modal">Yes, I want
+                            to cancel the order</button>
+                        <button id="modalNoBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">No, I want
+                            to continue adding products</button>
+                    </div>
                 </div>
-                <div class="modal-body text-start">
-                Are you sure about cancelling the order?
-                </div>
-                <div class="modal-footer">
-                <button id="modalYesBtn" type="button" class="btn btn-light" data-bs-dismiss="modal">Yes, I want to cancel the order</button>
-                <button id="modalNoBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">No, I want to continue adding products</button>
-                </div>
-            </div>
             </div>
         </div>
-
     </main>
-
-
-    <footer class="container-fluid">
-
+    <br>
+    <br>
+    <footer class="container-fluid d-flex justify-content-center">
+        <p><strong>Contact us: +57 3102105253 - info@restaurant.com - @restaurant</strong></p>
     </footer>
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
